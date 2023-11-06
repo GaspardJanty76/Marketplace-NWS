@@ -1,0 +1,49 @@
+body, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+}
+
+.brand {
+    color: white;
+    font-size: 30px;
+}
+
+.nav-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin-right: 100px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.icon {
+    margin-right: 50px;
+    font-size: 24px;
+    display: flex;
+}
+.icon a{
+    text-decoration: none;
+    color: white;
+    margin-right: 20px;
+
+    
+}
