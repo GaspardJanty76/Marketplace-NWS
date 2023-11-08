@@ -1,10 +1,10 @@
 <?php
-require_once("dbConnect.php");
+require_once 'dbConnect.php';
 
 class Authentification {
     private $pdo;
 
-    public function __construct(DBManagement $pdoManager) {
+    public function __construct(DBManager $pdoManager) {
         $this->pdo = $pdoManager->getPDO();
     }
 
@@ -16,6 +16,16 @@ class Authentification {
         $utilisateur = $requete->fetch(PDO::FETCH_ASSOC);
 
         if ($utilisateur && password_verify($mot_de_passe, $utilisateur['password'])) {
+            session_start();
+
+            // Définir une durée de vie pour la session (30 minutes)
+            $session_duration = 60; // 1 minute en secondes
+            session_set_cookie_params($session_duration);
+
+            // Stockez des informations de l'utilisateur dans la session
+            $_SESSION['user_id'] = $utilisateur['id'];
+            $_SESSION['username'] = $utilisateur['auth'];
+
             return true;
         }
 
@@ -23,7 +33,7 @@ class Authentification {
     }
 }
 
-$pdoManager = new DBManagement("maisonbayeul");
+$pdoManager = new DBManager("maisonbayeul");
 
 $auth = new Authentification($pdoManager);
 
@@ -32,7 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mot_de_passe = $_POST['password'];
 
     if ($auth->verifierAuthentification($pseudo, $mot_de_passe)) {
-        header("Location:../success.php");
+        // Redirigez l'utilisateur vers la page "createproduct.php"
+        header("Location: authVerif.php");
         exit();
     } else {
         echo "L'authentification a échoué. Veuillez réessayer.";

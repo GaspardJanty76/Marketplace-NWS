@@ -1,4 +1,4 @@
-<?php include_once 'templates/header.php'?>
+<?php include_once 'templates/clientheader.php'?>
 
 <h2>Connexion</h2>
 <form method="post" action="methodes/adminAuth.php">

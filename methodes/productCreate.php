@@ -1,7 +1,7 @@
 <?php
 require_once 'dbConnect.php';
 
-$pdoManager = new DBManagement('maisonbayeul');
+$pdoManager = new DBManager('maisonbayeul');
 $pdo = $pdoManager->getPDO();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

@@ -1,5 +1,5 @@
-<?php include_once 'templates/header.php';?>
+<?php include_once 'templates/clientheader.php';?>
 
 
 
-<?php include_once 'templates/footer.php';?>
+<?php include_once 'templates/clientfooter.php';?>
