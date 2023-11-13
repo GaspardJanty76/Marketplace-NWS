@@ -10,10 +10,10 @@
 <body>
     <header>
         <nav class="navbar">
-            <div class="brand">Maison Bayeul</div>
+            <div class="brand"><?php $connectedUsername = $_SESSION['username']; echo $connectedUsername; ?></div>
             <ul class="nav-links">
-                <li><a href="index.php">Accueil</a></li>
-                <li><a href="#">Catalogue</a></li>
+                <li><a href="createproduct.php">Créer un produit</a></li>
+                <li><a href="displayproduct.php">Afficher les produits</a></li>
             </ul>
             <div class="icon">
                 <a href="adminauth.php"><i class="fas fa-user"></i></a>

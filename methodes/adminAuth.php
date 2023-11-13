@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($auth->verifierAuthentification($pseudo, $mot_de_passe)) {
         // Redirigez l'utilisateur vers la page "createproduct.php"
-        header("Location: createproduct.php");
+        header("Location: ../createproduct.php");
         exit();
     } else {
         echo "L'authentification a échoué. Veuillez réessayer.";
