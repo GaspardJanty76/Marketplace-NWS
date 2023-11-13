@@ -8,4 +8,4 @@ else{
     header("Location: ../auth.php");
     exit();
 }
-?>
+?> 
