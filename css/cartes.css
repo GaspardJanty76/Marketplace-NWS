@@ -3,11 +3,6 @@
         font-family: Arial, sans-serif;
     }
 
-    h1 {
-        text-align: center;
-        color: #333;
-    }
-
     .product-list {
         list-style: none;
         padding: 0;
@@ -21,9 +16,6 @@
         box-sizing: border-box;
         width: calc(25% - 20px);
         margin: 10px;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
         padding: 15px;
     }
 
@@ -35,7 +27,7 @@
         max-width: 100%;
         height: auto;
         margin-top: 10px;
-        border-radius: 8px;
+
     }
 
     .product-divider {
