@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmtUpdate->execute()) {
             header('Location: ../modifyproduct.php');
+            exit();
         } else {
             echo 'Erreur lors de la mise à jour.';
         }

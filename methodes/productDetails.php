@@ -1,30 +1,49 @@
 <?php
 require_once 'dbConnect.php';
 
-$pdoManager = new DBManager('maisonbayeul');
-$pdo = $pdoManager->getPDO();
+class ProductDetailsViewer
+{
+    private $pdo;
 
-// Check if the 'id' parameter is set in the URL
-if (isset($_GET['id'])) {
-    $productId = $_GET['id'];
+    public function __construct($pdo)
+    {
+        $this->pdo = $pdo;
+    }
 
-    // Retrieve product details based on the ID
-    $sql = "SELECT * FROM products WHERE idproducts = :id";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':id', $productId, PDO::PARAM_INT);
-    $stmt->execute();
+    public function displayProductDetails()
+    {
+        // Check if the 'id' parameter is set in the URL
+        if (isset($_GET['id'])) {
+            $productId = $_GET['id'];
 
-    $productDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Retrieve product details based on the ID
+            $sql = "SELECT * FROM products WHERE idproducts = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':id', $productId, PDO::PARAM_INT);
+            $stmt->execute();
 
-    if ($productDetails) {
+            $productDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($productDetails) {
+                $this->renderProductDetails($productDetails);
+            } else {
+                echo '<p>Product not found.</p>';
+            }
+        } else {
+            echo '<p>Invalid request. Please provide a product ID.</p>';
+        }
+    }
+
+    private function renderProductDetails($productDetails)
+    {
         echo '<h1>' . $productDetails['name'] . '</h1>';
         echo '<img src="../db_images/' . $productDetails['image_name'] . '" alt="Image du produit">';
         echo '<p><strong>Prix :</strong> ' . $productDetails['price'] . ' €</p>';
         echo '<p><strong>Description :</strong> ' . $productDetails['description'] . '</p>';
         echo '<p><strong>Stock :</strong> ' . $productDetails['stock'] . '</p>';
         echo '<form method="post" action="addToCart.php">';
-        echo '<input type="hidden" name="productId" value="' . $productId . '">';
-        
+        echo '<input type="hidden" name="productId" value="' . $productDetails['idproducts'] . '">';
+
         foreach ($productDetails as $key => $value) {
             echo '<input type="hidden" name="' . $key . '" value="' . $value . '">';
         }
@@ -34,10 +53,12 @@ if (isset($_GET['id'])) {
 
         echo '<input type="submit" value="Ajouter au panier">';
         echo '</form>';
-    } else {
-        echo '<p>Product not found.</p>';
     }
-} else {
-    echo '<p>Invalid request. Please provide a product ID.</p>';
 }
+
+$pdoManager = new DBManager('maisonbayeul');
+$pdo = $pdoManager->getPDO();
+
+$productDetailsViewer = new ProductDetailsViewer($pdo);
+$productDetailsViewer->displayProductDetails();
 ?>

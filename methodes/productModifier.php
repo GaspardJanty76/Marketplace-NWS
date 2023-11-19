@@ -1,15 +1,32 @@
 <?php
 require_once 'dbConnect.php';
 
-$pdoManager = new DBManager('maisonbayeul');
-$pdo = $pdoManager->getPDO();
+class ProductListWithActions
+{
+    private $pdo;
 
-$sql = "SELECT * FROM products";
-$stmt = $pdo->query($sql);
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function __construct($pdo)
+    {
+        $this->pdo = $pdo;
+    }
 
-if (!empty($products)) {
-    foreach ($products as $product) {
+    public function displayProductList()
+    {
+        $sql = "SELECT * FROM products";
+        $stmt = $this->pdo->query($sql);
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($products)) {
+            foreach ($products as $product) {
+                $this->renderProductDetails($product);
+            }
+        } else {
+            echo 'Aucun produit n\'est disponible pour le moment.';
+        }
+    }
+
+    private function renderProductDetails($product)
+    {
         echo 'Nom : ' . $product['name'] . '<br>';
         echo 'Prix : ' . $product['price'] . '<br>';
         echo 'Description : ' . $product['description'] . '<br>';
@@ -35,7 +52,11 @@ if (!empty($products)) {
         echo '<a href="methodes/productEdit.php?id=' . $product['idproducts'] . '">Modifier</a>';
         echo '<hr>';
     }
-} else {
-    echo 'Aucun produit n\'est disponible pour le moment.';
 }
+
+$pdoManager = new DBManager('maisonbayeul');
+$pdo = $pdoManager->getPDO();
+
+$productListWithActions = new ProductListWithActions($pdo);
+$productListWithActions->displayProductList();
 ?>

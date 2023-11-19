@@ -1,16 +1,34 @@
 <?php
 require_once 'dbConnect.php';
 
-$pdoManager = new DBManager('maisonbayeul');
-$pdo = $pdoManager->getPDO();
+class ProductLister
+{
+    private $pdo;
 
-$sql = "SELECT * FROM products";
-$stmt = $pdo->query($sql);
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function __construct($pdo)
+    {
+        $this->pdo = $pdo;
+    }
 
-if (!empty($products)) {
-    echo '<ul class="product-list">';
-    foreach ($products as $product) {
+    public function displayProductList()
+    {
+        $sql = "SELECT * FROM products";
+        $stmt = $this->pdo->query($sql);
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($products)) {
+            echo '<ul class="product-list">';
+            foreach ($products as $product) {
+                $this->renderProductCard($product);
+            }
+            echo '</ul>';
+        } else {
+            echo '<p class="no-products">Aucun produit n\'est disponible pour le moment.</p>';
+        }
+    }
+
+    private function renderProductCard($product)
+    {
         echo '<li class="product-card">';
         echo '<a href="methodes/productDetails.php?id=' . $product['idproducts'] . '">';
         echo '<img class="product-image" src="db_images/' . $product['image_name'] . '" alt="Image du produit">';
@@ -21,10 +39,11 @@ if (!empty($products)) {
         echo '</a>';
         echo '</li>';
     }
-    echo '</ul>';
-} else {
-    echo '<p class="no-products">Aucun produit n\'est disponible pour le moment.</p>';
 }
+
+$pdoManager = new DBManager('maisonbayeul');
+$pdo = $pdoManager->getPDO();
+
+$productLister = new ProductLister($pdo);
+$productLister->displayProductList();
 ?>
-
-
