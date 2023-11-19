@@ -1,0 +1,80 @@
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+}
+
+/* Styles généraux */
+#product-carousel-container {
+    max-width: 500px; /* (800px + 2 * 20px) pour laisser de l'espace pour les flèches */
+    margin: 0 auto;
+    position: relative; /* Ajout de position relative pour que les flèches position absolue soient par rapport à ce conteneur */
+}
+.product-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .product-card {
+        box-sizing: border-box;
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .product-details strong {
+        color: #333;
+    }
+
+    .product-image {
+        max-width: 100%;
+        height: auto;
+        margin-top: 10px;
+
+    }
+
+
+.no-products {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+}
+
+/* Owl Carousel Styles */
+.owl-carousel {
+    display: flex;
+}
+
+.owl-prev, .owl-next {
+    font-size: 24px;
+    color: #333;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.owl-prev {
+    left: 10px;
+}
+
+.owl-next {
+    right: 10px;
+}
+
+.owl-prev:hover, .owl-next:hover {
+    color: #000;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 600px) {
+    .product-card {
+        width: 100%;
+    }
+}

@@ -1,6 +1,8 @@
 <?php
 require_once 'dbConnect.php';
 
+const UPLOAD_PATH = "../db_images/";
+
 $pdoManager = new DBManager('maisonbayeul');
 $pdo = $pdoManager->getPDO();
 
@@ -16,26 +18,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $time = time();
         $new_img_name = $time . $img_name;
-        $upload_img = move_uploaded_file($name_tmp, "../db_images/" . $new_img_name);
+        $upload_img = move_uploaded_file($name_tmp, UPLOAD_PATH . $new_img_name);
+
         if ($upload_img) {
-            $sql = "INSERT INTO products (name, price, description, stock, image_name) VALUES (?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO products (name, price, description, stock, image_name, forward) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(1, $pname);
             $stmt->bindParam(2, $pprice);
             $stmt->bindParam(3, $pdesc);
             $stmt->bindParam(4, $pstock);
             $stmt->bindParam(5, $new_img_name);
+            $stmt->bindValue(6, "0");
 
             if ($stmt->execute()) {
-                echo "Le produit a été ajouté avec succès.";
+                echo "Success : Le produit a été ajouté avec succès.";
             } else {
-                echo "Erreur : " . $stmt->errorInfo()[2];
+                echo "Error : " . $stmt->errorInfo()[2];
             }
         } else {
-            echo "Erreur : Échec de l'upload de l'image.";
+            echo "Error : Échec de l'upload de l'image.";
         }
     } else {
-        echo "Erreur : Veuillez sélectionner une image valide.";
+        echo "Error : Veuillez sélectionner une image valide.";
     }
 }
 ?>
