@@ -15,7 +15,6 @@ if (!empty($products)) {
         echo 'Description : ' . $product['description'] . '<br>';
         echo 'Stock : ' . $product['stock'] . '<br>';
 
-        // Afficher le bouton en fonction de la valeur de la colonne "forward"
         if ($product['forward'] == 0) {
             echo '<form method="post" action="methodes/updateForward.php">';
             echo '<input type="hidden" name="id" value="' . $product['idproducts'] . '">';
@@ -28,7 +27,6 @@ if (!empty($products)) {
             echo '</form>';
         }
 
-        // Formulaire pour supprimer
         echo '<form method="post" action="methodes/productDelete.php" onsubmit="return confirm(\'Êtes-vous sûr de vouloir supprimer ce produit ?\');">';
         echo '<input type="hidden" name="id" value="' . $product['idproducts'] . '">';
         echo '<input type="submit" name="deleteButton" value="Supprimer">';

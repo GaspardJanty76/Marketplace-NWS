@@ -7,7 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $productId = $_POST['id'];
 
-    // Supprimer la ligne dans la base de données
     $sqlDelete = "DELETE FROM products WHERE idproducts = :id";
     $stmtDelete = $pdo->prepare($sqlDelete);
     $stmtDelete->bindParam(':id', $productId, PDO::PARAM_INT);
