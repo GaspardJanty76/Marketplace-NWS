@@ -12,3 +12,4 @@
         <input type="submit" value="Se connecter">
     </form>
 
+<?php include_once 'templates/clientfooter.php'; ?>
