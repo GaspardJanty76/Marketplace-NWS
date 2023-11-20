@@ -12,11 +12,9 @@ class ProductDetailsViewer
 
     public function displayProductDetails()
     {
-        // Check if the 'id' parameter is set in the URL
         if (isset($_GET['id'])) {
             $productId = $_GET['id'];
 
-            // Retrieve product details based on the ID
             $sql = "SELECT * FROM products WHERE idproducts = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(':id', $productId, PDO::PARAM_INT);
