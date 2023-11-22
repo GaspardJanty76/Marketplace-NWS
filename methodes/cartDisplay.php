@@ -47,6 +47,8 @@ class ShoppingCart
             echo '</tr>';
             echo '</table>';
             echo '<p><a href="methodes/clearCart.php">Vider le panier</a></p>';
+            echo '<p><a href="methodes/orderInfo.php">Passer commande</a></p>';
+
         }
     }
 
