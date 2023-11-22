@@ -33,23 +33,22 @@ class ProductEditor
 
     private function updateProduct($productId)
     {
-        $newName = $_POST['name'];
-        $newPrice = $_POST['price'];
-        $newDescription = $_POST['description'];
+        $newStock = $_POST['stock'];
 
-        $sqlUpdate = "UPDATE products SET name = :name, price = :price, description = :description WHERE idproducts = :id";
+        $sqlUpdate = "UPDATE products SET stock = :stock WHERE idproducts = :id";
         $stmtUpdate = $this->pdo->prepare($sqlUpdate);
-        $stmtUpdate->bindParam(':name', $newName, PDO::PARAM_STR);
-        $stmtUpdate->bindParam(':price', $newPrice, PDO::PARAM_STR);
-        $stmtUpdate->bindParam(':description', $newDescription, PDO::PARAM_STR);
-        $stmtUpdate->bindParam(':id', $productId, PDO::PARAM_INT);
+        $stmtUpdate->bindParam(':stock', $newStock, PDO::PARAM_STR);
+        $stmtUpdate->bindParam(':id', $productId, PDO::PARAM_INT); // Add this line
 
-        if ($stmtUpdate->execute()) {
-            echo 'Produit mis à jour avec succès.';
-            header('Location: ../modifyproduct.php');
-            exit();
-        } else {
-            echo 'Erreur lors de la mise à jour du produit.';
+        try {
+            if ($stmtUpdate->execute()) {
+                echo 'Produit mis à jour avec succès.';
+                header('Location: ../stockproduct.php');
+            } else {
+                echo 'Erreur lors de la mise à jour du produit.';
+            }
+        } catch (PDOException $e) {
+            echo 'Erreur PDO : ' . $e->getMessage();
         }
     }
 
@@ -61,15 +60,15 @@ class ProductEditor
         $stmtSelect->execute();
 
         return $stmtSelect->fetch(PDO::FETCH_ASSOC);
+        
     }
 
     private function renderProductForm($product)
     {
         echo 'Modifier le produit : <br>';
         echo '<form method="post" action="">';
-        echo 'Nom : <input type="text" name="name" value="' . $product['name'] . '"><br>';
-        echo 'Prix : <input type="text" name="price" value="' . $product['price'] . '"><br>';
-        echo 'Description : <textarea name="description">' . $product['description'] . '</textarea><br>';
+        echo 'Nom : "'. $product['name'] . '"<br>';
+        echo 'Stock : <input type="text" name="stock" value="' . $product['stock'] . '"><br>';
         echo '<input type="submit" value="Enregistrer les modifications">';
         echo '</form>';
     }

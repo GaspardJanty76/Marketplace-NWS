@@ -37,7 +37,7 @@ class ProductCarousel
 
     private function getFeaturedProducts()
     {
-        $sql = "SELECT * FROM products WHERE forward = 1";
+        $sql = "SELECT * FROM products WHERE forward = 1 AND stock > 1";
         $stmt = $this->pdo->query($sql);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

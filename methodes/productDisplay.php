@@ -12,7 +12,7 @@ class ProductLister
 
     public function displayProductList()
     {
-        $sql = "SELECT * FROM products";
+        $sql = "SELECT * FROM products WHERE stock > 0";
         $stmt = $this->pdo->query($sql);
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
